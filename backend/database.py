@@ -3,8 +3,8 @@ import security
 
 conn = pymysql.connect(
         host='localhost',
-        user='root', 
-        password = "toby666",
+        user='nico', 
+        password = "",
         db='nebula'
     )
 

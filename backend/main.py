@@ -32,7 +32,7 @@ class DeletePost(BaseModel):
 async def main():
     return {"message": "Hello World"}
 
-@app.get("/login/")
+@app.post("/login/")
 async def login(user: User):
     if (database.valid_user(user.username, user.password) == True):
         return {"user": "valid"}

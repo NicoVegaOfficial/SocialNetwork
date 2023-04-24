@@ -5,24 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nebula Social Network</title>
     <link rel="stylesheet" href="src/style.css">
-    <script src="src/code.js"></script>
 </head>
 <body>
     <div class="top-bar">
         <p id="parrafo">Log in</p>
     </div>
     <div id="login">
-        <div  id="formulario">
-                <label for="username">Username</label>
-                <input id="inputUser" type="text">
-                <p class="errorUsuario" style="display: none;" >Debe introducir un usuario</p>
-                <label for="password">Password</label>
-                <input id="inputPassword" type="password">
-                <p class="errorPassword" style="display: none;" >Debe introducir una contraseña</p>
-                <button id="btnLogin" onclick="validData();">Log In</button>
-                <a class="account" href="signup.html">Create account</a>
-                <a class="account" href="forgottenpassword.html">Forgot your password?</a>
+        <form  id="formulario">
+            <label for="username">Username</label>
+            <input id="inputUser" type="text">
+            <p class="errorUsuario" style="display: none;" >Debe introducir un usuario</p>
+            <label for="password">Password</label>
+            <input id="inputPassword" type="password">
+            <p class="errorPassword" style="display: none;" >Debe introducir una contraseña</p>
+            <button id="btnLogin" type="submit">Log In</button>
+            <a class="account" href="signup.html">Create account</a>
+            <a class="account" href="forgottenpassword.html">Forgot your password?</a>
         </div>
     </div>
+    <script src="src/code.js"></script>
 </body>
 </html>
