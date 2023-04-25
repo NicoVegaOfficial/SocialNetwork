@@ -21,9 +21,10 @@ p{
     text-align: center;
     width: 100%;
 }
-.errorUsuario, .errorPassword{
+#errorUsuario, #errorPassword{
     color: #ef0f0f;
     font-size: 12px;
+    display: none;
 }
 #login{
     width: 320px;
