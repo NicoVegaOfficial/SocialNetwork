@@ -1,10 +1,11 @@
 import pymysql
 import security
+import re
 
 conn = pymysql.connect(
         host='localhost',
         user='nico', 
-        password = "",
+        password = "cd",
         db='nebula'
     )
 
@@ -35,23 +36,25 @@ def valid_user(user, password):
         
 def add_user(user, password):
     valid = False
-    user_list = []
-    user_list.append((user))
-    cur = conn.cursor()    
-    sql = "select username from users where username = %s;"
-    cur.executemany(sql, user_list)
-    resultado = cur.fetchone()
-    if(not resultado):
-        r = security.random_salt()
-        i = security.securepwd(r + password + r)
-        users_list = []
-        users_list.append((user, i, r))
-        cur = conn.cursor()
-        sql = "INSERT INTO users (username, passwd, salt, dateuser) VALUES (%s, %s, %s, now());"
-        x = cur.executemany(sql, users_list)
-        conn.commit()
-        if(x):
-            valid = True
+    format = r'^[a-zA-Z0-9]+$'
+    if re.match(format, user):
+        user_list = []
+        user_list.append((user))
+        cur = conn.cursor()    
+        sql = "select username from users where username = %s;"
+        cur.executemany(sql, user_list)
+        resultado = cur.fetchone()
+        if(not resultado):
+            r = security.random_salt()
+            i = security.securepwd(r + password + r)
+            users_list = []
+            users_list.append((user, i, r))
+            cur = conn.cursor()
+            sql = "INSERT INTO users (username, passwd, salt, dateuser) VALUES (%s, %s, %s, now());"
+            x = cur.executemany(sql, users_list)
+            conn.commit()
+            if(x):
+                valid = True
     return valid
 
 def change_password(user, password, new_password):

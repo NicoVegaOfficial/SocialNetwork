@@ -1,7 +1,6 @@
 import { validData } from './data.js';
 
 const form1 = document.querySelector('#formulario');
-
 form1.addEventListener('submit', async (event) => {
   event.preventDefault();
   const username = document.getElementById('inputUser').value;
@@ -9,7 +8,7 @@ form1.addEventListener('submit', async (event) => {
   if (validData() == true ){
 
     
-    const response = await fetch('http://127.0.0.1:8000/login/', {
+    const response = await fetch('http://127.0.0.1:8000/adduser/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

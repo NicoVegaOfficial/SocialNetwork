@@ -28,10 +28,6 @@ class Post(BaseModel):
 class DeletePost(BaseModel):
     id: str
 
-@app.get("/")
-async def main():
-    return {"message": "Hello World"}
-
 @app.post("/login/")
 async def login(user: User):
     if (database.valid_user(user.username, user.password) == True):
@@ -46,7 +42,10 @@ async def user(username: str):
 
 @app.post("/adduser/")
 async def add_user(user: User):
-    database.add_user(user.username, user.password)
+    if (database.add_user(user.username, user.password) == True):
+        return {"Registro": "Valido"}
+    else:
+        return {"Registro": "error"}
 
 @app.post("/addpost/")
 async def add_post(post: Post):
