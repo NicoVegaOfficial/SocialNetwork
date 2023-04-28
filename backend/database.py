@@ -5,7 +5,7 @@ import re
 conn = pymysql.connect(
         host='localhost',
         user='nico', 
-        password = "cd",
+        password = "",
         db='nebula'
     )
 
