@@ -6,7 +6,7 @@ conn = pymysql.connect(
         host='localhost',
         user='nico', 
         password = "",
-        db='nebula'
+        db='CircleConnect'
     )
 
 def valid_user(user, password):
