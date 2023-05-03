@@ -16,6 +16,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+class Data_User(BaseModel):
+    username: str
+    email: str
+    password: str
+
 
 class User(BaseModel):
     username: str
@@ -41,8 +46,8 @@ async def user(username: str):
 
 
 @app.post("/adduser/")
-async def add_user(user: User):
-    if (database.add_user(user.username, user.password) == True):
+async def add_user(data_User: Data_User):
+    if (database.add_user(data_User.username, data_User.email, data_User.password) == True):
         return {"Registro": "Valido"}
     else:
         return {"Registro": "error"}

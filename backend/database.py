@@ -14,7 +14,7 @@ def valid_user(user, password):
     users_list.append((user))
     valid = False
     cur = conn.cursor()    
-    sql = "select salt from users where username = %s;"
+    sql = "select salt from users where username = %s and enabled = 1;"
     cur.executemany(sql, users_list)
     resultado = cur.fetchone()
     if(resultado):
@@ -34,23 +34,23 @@ def valid_user(user, password):
             valid = True
     return valid
         
-def add_user(user, password):
+def add_user(user, email, password):
     valid = False
     format = r'^[a-zA-Z0-9]+$'
     if re.match(format, user):
         user_list = []
-        user_list.append((user))
+        user_list.append((user, email))
         cur = conn.cursor()    
-        sql = "select username from users where username = %s;"
+        sql = "select username from users where username = %s or email = %s;"
         cur.executemany(sql, user_list)
         resultado = cur.fetchone()
         if(not resultado):
             r = security.random_salt()
             i = security.securepwd(r + password + r)
             users_list = []
-            users_list.append((user, i, r))
+            users_list.append((user, email, i, r))
             cur = conn.cursor()
-            sql = "INSERT INTO users (username, passwd, salt, dateuser) VALUES (%s, %s, %s, now());"
+            sql = "INSERT INTO users (username, email, passwd, salt, dateuser, enabled) VALUES (%s, %s, %s, %s, now(), 1);"
             x = cur.executemany(sql, users_list)
             conn.commit()
             if(x):

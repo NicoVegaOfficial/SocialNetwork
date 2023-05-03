@@ -4,6 +4,7 @@ const form1 = document.querySelector('#formulario');
 form1.addEventListener('submit', async (event) => {
   event.preventDefault();
   const username = document.getElementById('inputUser').value;
+  const email = document.getElementById('inputEmail').value;
   const password = document.getElementById('inputPassword').value;
   if (validData() == true ){
 
@@ -13,7 +14,7 @@ form1.addEventListener('submit', async (event) => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ username, password })
+      body: JSON.stringify({ username, email, password })
     });
     
     if (response.ok) {
