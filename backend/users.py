@@ -4,15 +4,13 @@ import database
 
 app = APIRouter()
 
-class Data_User(BaseModel):
-    username: str
-    email: str
-    password: str
-
 
 class User(BaseModel):
     username: str
     password: str
+
+class Data_User(User):
+    email: str
 
 @app.post("/login/")
 async def login(user: User):

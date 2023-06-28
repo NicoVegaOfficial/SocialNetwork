@@ -5,7 +5,7 @@ import re
 conn = pymysql.connect(
         host='localhost',
         user='nico', 
-        password = "",
+        password = "toby666",
         db='CircleConnect'
     )
 
@@ -122,7 +122,7 @@ def get_post(userid):
     cur.executemany(sql, val)
     x = cur.fetchone()
     if(x):
-        sql = "select contenido from post inner join users on post.iduser = users.id where iduser = %s;"
+        sql = "select username, contenido from post inner join users on post.iduser = users.id where iduser =  %s;"
         val2 = []
         val2.append((userid))
         cur.executemany(sql, val2)
