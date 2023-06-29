@@ -3,7 +3,7 @@ body{
     background-color: black;
 }
 ::selection{
-    background-color: rgb(210, 60, 60);
+    background-color: #00b809;
 }
 p{
     color: rgb(255, 255, 255);
@@ -43,7 +43,7 @@ p{
     display: block;
   }
 .account{
-    color: rgb(210, 60, 60);
+    color: #00b809;
     text-decoration-line: none;
     display: block;
 
@@ -62,7 +62,7 @@ p{
     text-align: center;
 }
 #btnLogin{
-    background-color: rgb(210, 60, 60);
+    background-color: #00b809;
     width: 100%;
     font-size: 25px;
 }
