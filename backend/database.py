@@ -25,15 +25,18 @@ def valid_user(user, password):
         cur.executemany(sql, users_list2)
         output = cur.fetchone()
         if(output):
-            sql = "select id from users where username = %s;"
-            valid_user3 = []
-            valid_user3.append(user)
-            cur.executemany(sql, valid_user3)
-            z = cur.fetchone()
-            #active_session(z[0])
             valid = True
     return valid
-        
+
+def get_user_id(user):
+    users_list2 = []
+    users_list2.append((user))
+    sql = "select id from users where username = %s;"
+    cur = conn.cursor()
+    cur.executemany(sql, users_list2)
+    output = cur.fetchone()
+    return output    
+
 def add_user(user, email, password):
     valid = False
     format = r'^[a-zA-Z0-9]+$'
@@ -122,7 +125,7 @@ def get_post(userid):
     cur.executemany(sql, val)
     x = cur.fetchone()
     if(x):
-        sql = "select contenido from post inner join users on post.iduser = users.id where iduser = %s;"
+        sql = "select username, contenido from post inner join users on post.iduser = users.id where iduser =  %s;"
         val2 = []
         val2.append((userid))
         cur.executemany(sql, val2)
@@ -145,10 +148,10 @@ def delete_post(idpost):
         conn.commit()
     return output
 
-def active_session(userid):
+def active_session(id_session, id_user):
     val = []
-    val.append(str(userid))
+    val.append((id_session, id_user))
     cur = conn.cursor()
-    sql = "insert into activeSessions (iduser, timesession) values (%s, now());"
+    sql = "insert into sessions (id_session, id_user, date_session) values (%s, %s, now())"
     cur.executemany(sql, val)
     conn.commit()
