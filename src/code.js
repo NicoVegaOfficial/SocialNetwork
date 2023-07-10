@@ -21,7 +21,7 @@ form1.addEventListener('submit', async (event) => {
       	var data = await response.text();
       	var dataObj = JSON.parse(data);
 	var sessionId = dataObj.session_id;
-	sessionStorage.setItem("session_id", sessionId);
+	localStorage.setItem("session_id", sessionId);
 	console.log(sessionId);
     } else {
       console.error('Error al iniciar sesión');
