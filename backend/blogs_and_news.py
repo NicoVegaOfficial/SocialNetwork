@@ -1,7 +1,8 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, status
 from pydantic import BaseModel
+from fastapi.responses import JSONResponse
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 import database
-
 app = APIRouter()
 
 class Id_post(BaseModel):
@@ -19,9 +20,20 @@ async def last_post(post_id: int):
 
 @app.post("/addpost/")
 async def add_post(post: Post):
-    return database.post_up(post.userid, post.contenido)
+    if (database.post_up(post.userid, post.contenido) == True):
+        item = {"Status": "Ok"}
+        return JSONResponse(status_code=status.HTTP_201_CREATED, content=item)
+    else:
+        item = {"Status": "Error"}
+        return JSONResponse(status_code=status.HTTP_401_UNAUTHORIZED , content=item)
 
 
 @app.delete("/deletepost/")
 async def delete_post(post: Delete_Post):
-    return database.delete_post(post.id)
+    if (database.delete_post(post.id)):
+        item = {"Status": "Deleted"}
+        return JSONResponse(status_code=status.HTTP_202_ACCEPTED, content=item)
+    else:
+        item = {"Status": "Error"}
+        return JSONResponse(status_code=status.HTTP_401_UNAUTHORIZED , content=item)
+
