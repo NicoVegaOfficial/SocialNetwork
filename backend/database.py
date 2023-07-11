@@ -12,7 +12,6 @@ conn = pymysql.connect(
 def valid_user(user, password):
     users_list = []
     users_list.append((user))
-    valid = False
     cur = conn.cursor()    
     sql = "select salt from users where username = %s and enabled = 1;"
     cur.executemany(sql, users_list)
@@ -25,8 +24,7 @@ def valid_user(user, password):
         cur.executemany(sql, users_list2)
         output = cur.fetchone()
         if(output):
-            valid = True
-    return valid
+            return True
 
 def get_user_id(user):
     users_list2 = []
@@ -38,7 +36,6 @@ def get_user_id(user):
     return output    
 
 def add_user(user, email, password):
-    valid = False
     format = r'^[a-zA-Z0-9]+$'
     if re.match(format, user):
         user_list = []
@@ -57,11 +54,9 @@ def add_user(user, email, password):
             x = cur.executemany(sql, users_list)
             conn.commit()
             if(x):
-                valid = True
-    return valid
+                return True
 
 def change_password(user, password, new_password):
-    valid = False
     cur = conn.cursor()    
     users_list = []
     users_list.append((user))
@@ -82,24 +77,16 @@ def change_password(user, password, new_password):
         y = cur.executemany(sql2, password_list2)
         conn.commit()
         if(x and y):
-            valid = True            
-    return valid
+            return True
 
 def search_user(name):
     cur = conn.cursor()    
-    sql_name = "select username from users where username = %s;"
-    sql_date = "select dateuser from users where username = %s;"
+    sql = "select username, email, dateuser from users where username = %s;"
     val = []
     val.append((name))
-    cur.executemany(sql_name, val)
-    resultado_name = cur.fetchone()
-    cur.execute(sql_date, val)
-    resultado_date = cur.fetchone()
-    x = {
-            "Nombre": resultado_name[0],
-            "fecha_registro": str(resultado_date[0])
-        }
-    return x
+    cur.executemany(sql, val)
+    output = cur.fetchone()
+    return output
 
 def post_up(userid, contenido):
     val = []
@@ -114,10 +101,9 @@ def post_up(userid, contenido):
         val2.append((userid, contenido))
         cur.executemany(sql, val2)
         conn.commit()
-    return True
+        return True
 
 def get_post(userid):
-    output = None
     val = []
     val.append((userid))
     cur = conn.cursor()
@@ -129,11 +115,10 @@ def get_post(userid):
         val2 = []
         val2.append((userid))
         cur.executemany(sql, val2)
-        output = cur.fetchall()
-    return output
+        return cur.fetchall()
+
 
 def delete_post(idpost):
-    output = None
     val = []
     val.append((idpost))
     cur = conn.cursor()
@@ -146,7 +131,8 @@ def delete_post(idpost):
         val2.append((idpost))
         cur.execute(sql, val)
         conn.commit()
-    return output
+        if (cur):
+            return True
 
 def active_session(id_session, id_user):
     val = []
@@ -155,3 +141,12 @@ def active_session(id_session, id_user):
     sql = "insert into sessions (id_session, id_user, date_session) values (%s, %s, now())"
     cur.executemany(sql, val)
     conn.commit()
+
+def valid_session(session_id):
+    cur = conn.cursor()    
+    sql = "select id_session from sessions where id_session = %s;"
+    val = []
+    val.append((session_id))
+    cur.execute(sql, val)
+    output = cur.fetchone()
+    return output

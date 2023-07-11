@@ -25,12 +25,3 @@ const response = await fetch('http://127.0.0.1:8000/lastpost/3', {
 } else {
     console.error('Error recurerar publicaciones');
   }
-
-/*
-await fetch("http://127.0.0.1:8000/user/nicovega/")
-    .then(res => res.json())
-    .then(response => {
-        document.getElementById("news").innerHTML = ` <p>${response.Nombre} </p> <p>${response.fecha_registro} </p>`;
-    })
-*/
-//document.getElementById("root").innerHTML = "<p>Hola mundo</p>";

@@ -49,7 +49,7 @@ p{
 
 }
 
-#inputUser, #inputEmail, #inputPassword, #btnLogin, #parrafo, #inputPassword2 {
+#username, #email, #password, #btnLogin, #parrafo, #password2 {
     display: flex;
     justify-content: center;
     align-items: center;

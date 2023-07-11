@@ -3,9 +3,9 @@ import { validData } from './data.js';
 const form1 = document.querySelector('#formulario');
 form1.addEventListener('submit', async (event) => {
   event.preventDefault();
-  const username = document.getElementById('inputUser').value;
-  const email = document.getElementById('inputEmail').value;
-  const password = document.getElementById('inputPassword').value;
+  const username = document.getElementById('username').value;
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
   if (validData() == true ){
 
     

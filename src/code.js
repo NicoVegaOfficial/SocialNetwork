@@ -1,30 +1,37 @@
 import { validUser } from './user.js';
 
-const form1 = document.querySelector('#formulario');
 
-form1.addEventListener('submit', async (event) => {
-  event.preventDefault();
-  const username = document.getElementById('inputUser').value;
-  const password = document.getElementById('inputPassword').value;
-  if (validUser() == true ){
+const form = document.getElementById('formulario');
 
-    
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
+  const formData = new URLSearchParams();
+  formData.append('username', username);
+  formData.append('password', password);
+
+  try {
     const response = await fetch('http://127.0.0.1:8000/login/', {
       method: 'POST',
+      body: formData,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: JSON.stringify({ username, password })
     });
-    
+
     if (response.ok) {
-      	var data = await response.text();
-      	var dataObj = JSON.parse(data);
-	var sessionId = dataObj.session_id;
-	localStorage.setItem("session_id", sessionId);
-	console.log(sessionId);
+      var data = await response.text();
+      var dataObj = JSON.parse(data);
+      var access_token = dataObj.access_token;
+      localStorage.setItem("access_token", access_token);
+      console.log(access_token);
     } else {
-      console.error('Error al iniciar sesión');
-    }
+    console.error('Error al iniciar sesión');
+  }
+  } catch (error) {
+    console.error('Error:', error);
   }
 });
