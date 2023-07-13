@@ -39,11 +39,13 @@ async def add_user(data_User: User):
         return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content=item)
     
 async def current_user(token: str = Depends(oauth2)):
-    return database.valid_session(token)
+    return database.id_session(token)
 
 @app.post("/valid_token/")
-async def valid_token(token: str = Depends(current_user)):
-    if (database.valid_session(token)):
-        return True
+async def id_session(token: str = Depends(current_user)):
+    if (database.id_session(token)):
+        item = {"Token": "Valido"}
+        return JSONResponse(status_code=status.HTTP_202_ACCEPTED, content=item)
     else:
-        return False
+        item = {"Token": "No valido"}
+        return JSONResponse(status_code=status.HTTP_401_UNAUTHORIZED, content=item)
