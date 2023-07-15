@@ -3,26 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CircleConnect</title>
- <!--   <link rel="stylesheet" href="src/style.css"> -->
-    <style>
-        body{
-            background-color: black;
-        }
-        p{
-            color: white;
-        }
-    </style>
-</head>
-<body>
-    <script src="src/codeHome.js" type="module"></script>
-    <link rel="stylesheet" href="src/style.css">
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+    <title>CircleConnect</title>
+    <link rel="stylesheet" href="src/style.css">    
+    <script src="src/addPost.js"></script>
 </head>
 <body>
-    <script src="src/home.js" type="module"></script>
-    <div id="root" onload="getNews();">
+    <div id="root">
         
+        <div id="top-var"></div>
+    <div id="postNews">
+        <textarea id="text" type="text"> </textarea>
+        <br>
+        <button id="postNew" onclick="publicarPost();">Publicar Post</button>
     </div>
+    <div id="news-div">
+            <p> Últimas publicaciones </p>
+            <div id="news">
+                
+            </divs>
+        </div>
+    </div>
+    <script src="src/home.js" type="module"></script>  
 </body>
 </html>

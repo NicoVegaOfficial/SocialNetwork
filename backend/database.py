@@ -25,6 +25,7 @@ def valid_user(user, password):
         output = cur.fetchone()
         if(output):
             return True
+        
 
 def get_user_id(user):
     users_list2 = []
@@ -88,20 +89,24 @@ def search_user(name):
     output = cur.fetchone()
     return output
 
-def post_up(userid, contenido):
-    val = []
-    val.append((userid))
-    cur = conn.cursor()
-    sql = "select id from users where id = %s;"
-    cur.executemany(sql, val)
-    x = cur.fetchone()
-    if(x):
+def post_up(access_id, contenido):
+    userid = id_session(access_id)
+    if(userid):
+        cur = conn.cursor()
         sql = "insert into post (iduser, contenido, datepost) values (%s, %s,  now());"
         val2 = []
         val2.append((userid, contenido))
         cur.executemany(sql, val2)
         conn.commit()
         return True
+
+
+
+def get_all_post():
+    cur = conn.cursor()
+    sql = "select username, contenido, datepost from post inner join users on post.iduser = users.id;"
+    cur.execute(sql)
+    return cur.fetchall()
 
 def get_post(userid):
     val = []
@@ -111,7 +116,7 @@ def get_post(userid):
     cur.executemany(sql, val)
     x = cur.fetchone()
     if(x):
-        sql = "select username, contenido from post inner join users on post.iduser = users.id where iduser =  %s;"
+        sql = "select username, contenido, datepost from post inner join users on post.iduser = users.id where iduser =  %s;"
         val2 = []
         val2.append((userid))
         cur.executemany(sql, val2)
@@ -142,11 +147,12 @@ def active_session(id_session, id_user):
     cur.executemany(sql, val)
     conn.commit()
 
-def valid_session(session_id):
+def id_session(session_id):
     cur = conn.cursor()    
-    sql = "select id_session from sessions where id_session = %s;"
+    sql = "select id_user from sessions where id_session = %s;"
     val = []
     val.append((session_id))
     cur.execute(sql, val)
     output = cur.fetchone()
-    return output
+    if (output):
+        return output

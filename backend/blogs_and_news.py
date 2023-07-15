@@ -3,10 +3,11 @@ from pydantic import BaseModel
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 import database
+
 app = APIRouter()
 
 class Id_post(BaseModel):
-    userid: str
+    id_access: str
 
 class Post(Id_post):
     contenido: str
@@ -14,13 +15,17 @@ class Post(Id_post):
 class Delete_Post(BaseModel):
     id: str
 
+@app.get("/get_all_post/")
+async def all_post():
+    return database.get_all_post()
+
 @app.get("/lastpost/{post_id}")
 async def last_post(post_id: int):
     return database.get_post(post_id)
 
 @app.post("/addpost/")
 async def add_post(post: Post):
-    if (database.post_up(post.userid, post.contenido) == True):
+    if (database.post_up(post.id_access, post.contenido) == True):
         item = {"Status": "Ok"}
         return JSONResponse(status_code=status.HTTP_201_CREATED, content=item)
     else:

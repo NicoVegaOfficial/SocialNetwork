@@ -69,3 +69,28 @@ p{
 #parrafo{
     font-size: 60px;
 }
+
+#root{
+    margin-left: 10%;    
+    margin-right: 10%;
+  }
+
+#text{
+    width: 100%;
+    height: 100px;
+    resize: vertical;
+    padding: 15px;
+    font-size: 25px;
+}
+
+#postNew{
+    background-color: #00b809;
+    font-size: 25px;
+    float: right;
+    border-radius: 8px;
+    border-style: none;
+    margin-top: 12px;
+    padding: 8px;
+    font-size: 25px;
+}
+
