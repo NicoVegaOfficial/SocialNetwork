@@ -28,7 +28,7 @@ if (getPost.ok) {
     const data = await getPost.json();
     for (var i = 0; i < data.length ; i++){
       console.log(i);
-      htmlContent += '<p>'+ 'Usuario: '  + data[i][0] + '<br> Estado: '  +  data[i][1] + '<br> Fecha:'  +  data[i][2] + '</p>';
+      htmlContent  += `<p>Usuario: ${data[i][0]} <br>Estado: ${data[i][1]} <br>Fecha: ${data[i][2]}</p>`;
     }
      console.log(data);
      document.getElementById("news").innerHTML = htmlContent

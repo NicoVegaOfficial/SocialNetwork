@@ -5,8 +5,8 @@ import re
 conn = pymysql.connect(
         host='localhost',
         user='nico', 
-        password = "",
-        db='CircleConnect'
+        password = "tobyX?890",
+        db='circleconnect'
     )
 
 def valid_user(user, password):
